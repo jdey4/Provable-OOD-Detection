@@ -40,6 +40,7 @@ def main(args):
             writer.add_text('Hyperparameters', config_str)
             
             print('Going in!!!               vssw')
+            raise ValueError("Unknown distance measure!")
             model = fac.get_model(args.architecture)
             if type(args.gpu)==omegaconf.listconfig.ListConfig:
                 device = torch.device('cuda:' + str(min(args.gpu)))
