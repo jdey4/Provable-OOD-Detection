@@ -37,7 +37,8 @@ class CNN_IBP(nn.Module):
         else:
             last_layer_type = modules_ibp.LinearI
         self.last_layer_type = last_layer_type
-            
+
+        print(size)    
         if size == 'L': 
             print('Got it!!!')  
             self.C1 = modules_ibp.Conv2dI(self.color_channels, 6, 3, padding=1, stride=1)
