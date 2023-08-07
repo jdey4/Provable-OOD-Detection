@@ -269,7 +269,7 @@ class CNN_IBP(nn.Module):
             self.A1 = modules_ibp.ReLUI()
             self.C2 = modules_ibp.Conv2dI(6, 16, 3, padding=1, stride=1)
             self.A2 = modules_ibp.ReLUI()
-            self.C3 = modules_ibp.AvgPool2d(2)
+            self.C3 = torch.nn.AvgPool2d(2)
             self.F = modules_ibp.FlattenI()
             self.L3 = modules_ibp.LinearI(16*3*3, 120)
             self.A3 = modules_ibp.ReLUI()
