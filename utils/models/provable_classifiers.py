@@ -38,16 +38,17 @@ class CNN_IBP(nn.Module):
             last_layer_type = modules_ibp.LinearI
         self.last_layer_type = last_layer_type
             
-        if size == 'L':   
+        if size == 'L': 
+            print('Got it!!!')  
             self.C1 = modules_ibp.Conv2dI(self.color_channels, 6, 3, padding=1, stride=1)
             self.A1 = modules_ibp.ReLUI()
             self.C2 = modules_ibp.Conv2dI(6, 16, 3, padding=1, stride=1)
             self.A2 = modules_ibp.ReLUI()
             self.C3 = modules_ibp.AvgPool2d(2)
             self.F = modules_ibp.FlattenI()
-            self.L3 = modules_ibp.LinearI(16*5*3, 120)
+            self.L3 = modules_ibp.LinearI(16*3*3, 120)
             self.A3 = modules_ibp.ReLUI()
-            self.L4 = modules_ibp.LinearI(16*5*3, 84)
+            self.L4 = modules_ibp.LinearI(120, 84)
             self.A4 = modules_ibp.ReLUI()
             self.L5 = last_layer_type(84, self.num_classes, bias=last_bias)
 
