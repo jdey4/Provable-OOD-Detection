@@ -17,7 +17,7 @@ class CNN_IBP(nn.Module):
         elif dset_in_name == 'CIFAR10' or dset_in_name == 'SVHN':
             self.color_channels = 3
             self.hw = 32
-            num_classes = 10 if num_classes is None else num_classes
+            num_classes = 2 #JD change
         elif dset_in_name == 'CIFAR100':
             self.color_channels = 3
             self.hw = 32
@@ -39,35 +39,29 @@ class CNN_IBP(nn.Module):
         self.last_layer_type = last_layer_type
             
         if size == 'L':   
-            self.C1 = modules_ibp.Conv2dI(self.color_channels, 64, 3, padding=1, stride=1)
+            self.C1 = modules_ibp.Conv2dI(self.color_channels, 6, 3, padding=1, stride=1)
             self.A1 = modules_ibp.ReLUI()
-            self.C2 = modules_ibp.Conv2dI(64, 64, 3, padding=1, stride=1)
+            self.C2 = modules_ibp.Conv2dI(6, 16, 3, padding=1, stride=1)
             self.A2 = modules_ibp.ReLUI()
-            self.C3 = modules_ibp.Conv2dI(64, 128, 3, padding=1, stride=2)
-            self.A3 = modules_ibp.ReLUI()
-            self.C4 = modules_ibp.Conv2dI(128, 128, 3, padding=1, stride=1)
-            self.A4 = modules_ibp.ReLUI()
-            self.C5 = modules_ibp.Conv2dI(128, 128, 3, padding=1, stride=1)
-            self.A5 = modules_ibp.ReLUI()
+            self.C3 = modules_ibp.AvgPool2d(2)
             self.F = modules_ibp.FlattenI()
-            self.L6 = modules_ibp.LinearI(128*(self.hw//2)**2, 512)
-            self.A6 = modules_ibp.ReLUI()
-            self.L7 = last_layer_type(512, self.num_classes, bias=last_bias)
+            self.L3 = modules_ibp.LinearI(16*5*3, 120)
+            self.A3 = modules_ibp.ReLUI()
+            self.L4 = modules_ibp.LinearI(16*5*3, 84)
+            self.A4 = modules_ibp.ReLUI()
+            self.L5 = last_layer_type(84, self.num_classes, bias=last_bias)
 
             self.layers = (self.C1,
                            self.A1,
                            self.C2,
                            self.A2,
                            self.C3,
-                           self.A3,
-                           self.C4,
-                           self.A4,
-                           self.C5,
-                           self.A5,
                            self.F,
-                           self.L6,
-                           self.A6,
-                           self.L7,
+                           self.L3,
+                           self.A3,
+                           self.L4,
+                           self.A4,
+                           self.L5,
                           )
 
             self.__name__ = 'CNN_L_' + dset_in_name
