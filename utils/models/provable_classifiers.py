@@ -38,7 +38,6 @@ class CNN_IBP(nn.Module):
             last_layer_type = modules_ibp.LinearI
         self.last_layer_type = last_layer_type
 
-        raise ValueError("Unknown distance measure!", size) 
         if size == 'L':  
             self.C1 = modules_ibp.Conv2dI(self.color_channels, 6, 3, padding=1, stride=1)
             self.A1 = modules_ibp.ReLUI()
@@ -265,28 +264,27 @@ class CNN_IBP(nn.Module):
 
             self.__name__ = f'CNN_C3s-{self.width}_' + dset_in_name
             
-        elif size == 'S':
-            self.width = 1
-            self.C1 = modules_ibp.Conv2dI(self.color_channels, 128*self.width, 3, padding=1, stride=1)
+        elif size == 'S': #JD change
+            self.C1 = modules_ibp.Conv2dI(self.color_channels, 6, 3, padding=1, stride=1)
             self.A1 = modules_ibp.ReLUI()
-            self.C2 = modules_ibp.Conv2dI(128*self.width, 256*self.width, 3, padding=1, stride=2)
+            self.C2 = modules_ibp.Conv2dI(6, 16, 3, padding=1, stride=1)
             self.A2 = modules_ibp.ReLUI()
-            self.C3 = modules_ibp.Conv2dI(256*self.width, 256*self.width, 3, padding=1, stride=1)
-            self.A3 = modules_ibp.ReLUI()
-            self.pool = modules_ibp.AvgPool2dI(2)
+            self.C3 = modules_ibp.AvgPool2d(2)
             self.F = modules_ibp.FlattenI()
-            self.L4 = modules_ibp.LinearI(256*self.width*(self.hw//4)**2, 128)
+            self.L3 = modules_ibp.LinearI(16*3*3, 120)
+            self.A3 = modules_ibp.ReLUI()
+            self.L4 = modules_ibp.LinearI(120, 84)
             self.A4 = modules_ibp.ReLUI()
-            self.L5 = last_layer_type(128, self.num_classes)
-                        
+            self.L5 = last_layer_type(84, self.num_classes, bias=last_bias)
+
             self.layers = (self.C1,
                            self.A1,
                            self.C2,
                            self.A2,
                            self.C3,
-                           self.A3,
-                           self.pool,
                            self.F,
+                           self.L3,
+                           self.A3,
                            self.L4,
                            self.A4,
                            self.L5,
