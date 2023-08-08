@@ -519,8 +519,10 @@ class CNN_IBP(nn.Module):
         
     def forward(self, x):
         x = x.type(torch.get_default_dtype())
-        for layer in self.layers:
+        for ii,layer in enumerate(self.layers):
             x = layer.forward(x)
+            if ii==5:
+                raise ValueError('see size', x.size())
         return x
     
     def forward_layer(self, x, idx):
