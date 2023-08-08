@@ -271,7 +271,7 @@ class CNN_IBP(nn.Module):
             self.A2 = modules_ibp.ReLUI()
             self.C3 = torch.nn.AvgPool2d(2)
             self.F = modules_ibp.FlattenI()
-            self.L3 = modules_ibp.LinearI(16*3*3, 120)
+            self.L3 = modules_ibp.LinearI(4096, 120)
             self.A3 = modules_ibp.ReLUI()
             self.L4 = modules_ibp.LinearI(120, 84)
             self.A4 = modules_ibp.ReLUI()
@@ -521,8 +521,8 @@ class CNN_IBP(nn.Module):
         x = x.type(torch.get_default_dtype())
         for ii,layer in enumerate(self.layers):
             x = layer.forward(x)
-            if ii==5:
-                raise ValueError('see size', x.size())
+            '''if ii==5:
+                raise ValueError('see size', x.size())'''
         return x
     
     def forward_layer(self, x, idx):
