@@ -596,7 +596,7 @@ val_loader_out_dicts['CIFAR10'] = {
         #'ImageNet-':  dict([]),
         'Smooth':  dict([]),
         'TINY':  dict([]),
-#         'TinyOpen': dict([])
+        'TinyOpen': dict([])
         #'CIFAR10': dict([]),
 }
 
