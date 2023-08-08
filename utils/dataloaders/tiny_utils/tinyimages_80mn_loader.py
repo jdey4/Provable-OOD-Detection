@@ -15,13 +15,17 @@ class TinyImages(torch.utils.data.Dataset):
 
     def __init__(self, transform=None, exclude_cifar=['H','CEDA11']):
 
-        raise ValueError('see ', tiny_path)
         self.data_file = open(tiny_path, "rb")
 
         def load_image(idx):
             self.data_file.seek(idx * 3072)
             data = self.data_file.read(3072)
-            return Image.fromarray(np.fromstring(data, dtype='uint8').reshape(32, 32, 3, order="F"))
+            img = np.fromstring(data, dtype='uint8')
+
+            if len(img) == 0:
+                raise ValueError('see ', tiny_path)
+            
+            return Image.fromarray(img.reshape(32, 32, 3, order="F"))
 
         self.load_image = load_image
         self.offset = 0     # offset index
