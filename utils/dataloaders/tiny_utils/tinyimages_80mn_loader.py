@@ -23,7 +23,7 @@ class TinyImages(torch.utils.data.Dataset):
             img = np.fromstring(data, dtype='uint8')
 
             if len(img) == 0:
-                raise ValueError('see ', tiny_path)
+                raise ValueError('see ', tiny_path, idx)
             
             return Image.fromarray(img.reshape(32, 32, 3, order="F"))
 
