@@ -593,7 +593,7 @@ val_loader_out_dicts['CIFAR10'] = {
         'SVHN': dict([]),
         'LSUN_CR': dict([]),
         'Uniform':  dict([]),
-        #'ImageNet-':  dict([]),
+        'ImageNet-':  dict([]),
         'Smooth':  dict([]),
         'TINY':  dict([]),
         'TinyOpen': dict([])
