@@ -15,6 +15,7 @@ class TinyImages(torch.utils.data.Dataset):
 
     def __init__(self, transform=None, exclude_cifar=['H','CEDA11']):
 
+        raise ValueError('see ', tiny_path)
         self.data_file = open(tiny_path, "rb")
 
         def load_image(idx):
