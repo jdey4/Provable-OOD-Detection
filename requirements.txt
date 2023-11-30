@@ -38,9 +38,9 @@ cloudpickle #@ file:///tmp/build/80754af9/cloudpickle_1594141588948/work
 clyent
 colorama==0.4.3
 conda
-conda-build==3.18.11
-conda-package-handling==1.7.0
-conda-verify==3.4.2
+conda-build
+conda-package-handling
+conda-verify
 configparser==5.0.2
 contextlib2==0.6.0.post1
 cryptography==2.9.2
